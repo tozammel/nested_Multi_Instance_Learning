@@ -94,8 +94,10 @@ class nMIL_delta:
         pos_count = 0
         allcount = 0
         for cVal in dataIndex.viewvalues():
+            print("keys =", cVal.keys())
             Z.append(cVal)
-            if cVal['Y']:
+            # if cVal['Y']:
+            if cVal['protest']:
                 Y.append(1)
                 pos_count += 1
             else:
@@ -103,6 +105,7 @@ class nMIL_delta:
 
             combinedDoc = []
             featureDoc = []
+            print("history =", cVal['history'])
             for i in range(max(1, 11 - self.bagsize), 11):
                 if i == 1:
                     cosine_sim = 1.0
@@ -274,17 +277,27 @@ def main(args):
     import json
     import os
 
-    trainfname = "input_forClassification/country-%s/leadtime-%d/%s"\
-            % (args.country, args.leadtime, args.train)
-    trainf =  args.path + trainfname
+    # trainfname = "input_forClassification/country-%s/leadtime-%d/%s"\
+    #         % (args.country, args.leadtime, args.train)
+    # trainf =  args.path + trainfname
+    # trainf = "sample-data/nMIL_lt4_ar/top6cities_realtime_TrainData_2weekshistory.json"
+    # trainf = "sample-data/nMIL_lt4_ar/allgsr_top10cities_realtime_TrainData_2weekshistory.json"
+    trainf = "sample-data/nMIL_lt4_ar/allgsr_top6cities_realtime_TrainData_2weekshistory.json"
+    print("Train =", trainf)
+
     # Testing data
-    testfname = "input_forClassification/country-%s/leadtime-%d/%s"\
-            % (args.country, args.leadtime, args.test)
-    testf = args.path + testfname  
+    # testfname = "input_forClassification/country-%s/leadtime-%d/%s"\
+    #         % (args.country, args.leadtime, args.test)
+    # testf = args.path + testfname
+    # testf ="sample-data/nMIL_lt4_ar/top6cities_realtime_TestData_2weekshistory.json"
+    # testf ="sample-data/nMIL_lt4_ar/allgsr_top10cities_realtime_TestData_2weekshistory.json"
+    testf ="sample-data/nMIL_lt4_ar/allgsr_top6cities_realtime_TestData_2weekshistory.json"
+    print("Test =", testf)
 
-
-    dfname = "news_deepfeature/news_doc2vec_%s.json" % args.country
-    docf = args.path + dfname
+    # dfname = "news_deepfeature/news_doc2vec_%s.json" % args.country
+    dfname = "news_doc2vec_ar.json"
+    # docf = args.path + dfname
+    docf = "sample-data/" + dfname
 
     ### Output Files:
     resultf = '../result/{}_{}_lt-{}.txt'.format(args.resultfile, args.country, args.leadtime)
@@ -301,14 +314,14 @@ def main(args):
             testMap[len(testMap)] = j
 
     with open(docf) as infile:
-        docMap = {j['Id']: j['doc2vec'] for j in
+        docMap = {j['id']: j['doc2vec'] for j in
                   (json.loads(l) for l in infile)}
 
     day = args.historyDays
 
     start  = time.time()
     model = nMIL_delta(day, beta=args.beta, gamma=args.gamma, m0=args.m0, p0=args.p0)
-    print "Learning for Bag Size: %d" % day
+    print("Learning for Bag Size: %d" % day)
     model.read_data(trainIndex=trainMap, testIndex=testMap, docIndex=docMap)
 
     model, perf1, perf2, gsrHistoryProbs, test_Y, pred_probs = model.SGD(args.leadtime)
@@ -328,11 +341,11 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", help="path of data")
-    ap.add_argument("-c", "--country", help="country")
+    ap.add_argument("-c", "--country", help="country", default="ar")
     ap.add_argument("--train", help="path of training data")
     ap.add_argument("--test", help="path of testing data")
     ap.add_argument("--resultfile", help="path of result file")
-    ap.add_argument("--outfile", help="path of precursor file")
+    ap.add_argument("--outfile", help="path of precursor file", default="precursor")
     ap.add_argument("-l", "--leadtime", type=int, default=1, help="k days before events to forecast")
     ap.add_argument("-d", "--historyDays", type=int, default=10, help="number of history days to be used for training")
     ap.add_argument("-m0", type=float, default=.5, help="hyper parameter in hinge loss")

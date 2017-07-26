@@ -10,6 +10,7 @@ published in KDD16.
 """
 
 
+# from __future__ import absolute_import, division, print_function
 import sklearn
 import sklearn.svm
 from sklearn.feature_extraction import DictVectorizer
@@ -21,7 +22,7 @@ from copy import deepcopy
 import numpy as np
 from numpy import linalg as la
 import pdb
-import misvm_sklearn
+# import misvm_sklearn
 from scipy.sparse import issparse, vstack as parse_vstack
 import random
 import math
@@ -281,7 +282,7 @@ class nMIL:
 
                     a = zip(doc_ids, today_probs)
                     gsr_history_probs[bag_gsrId][idx] = a
-                                originalnews = self._testZ[idx]
+                    originalnews = self._testZ[idx]
             test_f1 = sklearn.metrics.f1_score(test_Y, pred_Y)
             test_recall = sklearn.metrics.recall_score(test_Y, pred_Y)
             test_precision = sklearn.metrics.precision_score(test_Y, pred_Y)
@@ -311,18 +312,29 @@ def main(args):
     import json
     import os
 
-    trainfname = "input_forClassification/country-%s/leadtime-%d/%s"\
-            % (args.country, args.leadtime, args.train)
-    trainf =  args.path + trainfname
+    # trainfname = "input_forClassification/country-%s/leadtime-%d/%s"\
+    #         % (args.country, args.leadtime, args.train)
+    # trainf =  args.path + trainfname
+
+    # trainf = "sample-data/nMIL_lt4_ar/top6cities_realtime_TrainData_2weekshistory.json"
+    trainf = "sample-data/nMIL_lt4_ar/allgsr_top10cities_realtime_TrainData_2weekshistory.json"
+
+    print(trainf)
 
     # Testing data
-    testfname = "input_forClassification/country-%s/leadtime-%d/%s"\
-            % (args.country, args.leadtime, args.test)
-    testf = args.path + testfname  
+    # testfname = "input_forClassification/country-%s/leadtime-%d/%s"\
+    #         % (args.country, args.leadtime, args.test)
+    # testf = args.path + testfname
+
+    # testf ="sample-data/nMIL_lt4_ar/top6cities_realtime_TestData_2weekshistory.json"
+    testf ="sample-data/nMIL_lt4_ar/allgsr_top10cities_realtime_TestData_2weekshistory.json"
+    print testf
 
 
-    dfname = "news_deepfeature/news_doc2vec_%s.json" % args.country
-    docf = args.path + dfname
+    # dfname = "news_deepfeature/news_doc2vec_%s.json" % args.country
+    dfname = "news_doc2vec_ar.json"
+    # docf = args.path + dfname
+    docf = "sample-data/" + dfname
 
     ### Output Files:
     resultf = '../result/{}_{}_lt-{}.txt'.format(args.resultfile, args.country, args.leadtime)
@@ -339,7 +351,7 @@ def main(args):
             testMap[len(testMap)] = j
 
     with open(docf) as infile:
-        docMap = {j['Id']: j['doc2vec'] for j in
+        docMap = {j['id']: j['doc2vec'] for j in
                   (json.loads(l) for l in infile)}
 
     day = args.historyDays
@@ -356,7 +368,8 @@ def main(args):
     w1 = open(resultf, 'a')
     w1.write('\t'.join([str(score) for score in perf1]) + '\n')
     w1.close()
-    outf1 = "../result/{}_{}_lt-{}_hd-{}_.json".format(args.outfile, args.country, args.leadtime, day)
+    # outf1 = "../result/{}_{}_lt-{}_hd-{}_.json".format(args.outfile, args.country, args.leadtime, day)
+    outf1 = "result/{}_{}_lt-{}_hd-{}_.json".format(args.outfile, args.country, args.leadtime, day)
     w2 = open(outf1, 'wb')
     w2.write(json.dumps(gsrHistoryProbs))
     w2.close()
@@ -369,13 +382,13 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--path", help="path of data")
-    ap.add_argument("-c", "--country", help="country")
+    ap.add_argument("-c", "--country", help="country", default="ar")
     ap.add_argument("--train", help="path of training data")
     ap.add_argument("--test", help="path of testing data")
     ap.add_argument("--resultfile", help="path of result file")
-    ap.add_argument("--outfile", help="path of precursor file")
+    ap.add_argument("--outfile", help="path of precursor file", default="precursor")
     ap.add_argument("-l", "--leadtime", type=int, default=1, help="k days before GSR to forecast")
-    ap.add_argument("-d", "--historyDays", type=int, default=10, help="number of history days to be used for training")
+    ap.add_argument("-d", "--historyDays", type=int, default=14, help="number of history days to be used for training")
     ap.add_argument("-m0", type=float, default=.5, help="hyper parameter in hinge loss")
     ap.add_argument("-p0", type=float, default=.5, help="hyper parameter in hinge loss")
     ap.add_argument("--gamma", type=float, default=.5, help="parameter in SGD")
