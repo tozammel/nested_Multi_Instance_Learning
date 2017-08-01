@@ -1,0 +1,93 @@
+# doc
+https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html
+
+# list all indices
+GET /_cat/indices?v
+
+GET effect-gt/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 0, 
+  "aggs": {
+    "source_agg": {
+      "terms": {
+        "field": "publisher",
+        "size": 100
+      }
+    }
+  }
+}
+
+GET effect-gt/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+
+GET effect-gt/_search
+{
+  "query": {
+    "match": {"company": "dexter"}
+  }
+}
+
+
+GET effect-gt/endpoint-malware/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "company": "dexter"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET effect/malware/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET /_cat/indices?v
+
+GET effect-malware/_search
+{
+  "query": {"match_all": {}}
+}
+
+GET effect-20170721/malware/_search
+{
+  "query": {"match_all": {}}
+}
+
+GET _aliases
+
+GET effect-gt/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match_phrase": {
+          "company": "armstrong"
+        }},
+        {
+          "match_phrase": {
+            "event_type": "malicious-destination"
+          }
+        }
+        
+      ]
+    }
+  }
+}

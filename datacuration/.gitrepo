@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@bitbucket.org:tozammel/datacuration.git
+	branch = master
+	commit = 54505a1c431e6d7bc203986869ae1666e4dc0d3f
+	parent = ec50707d3bc908371936d4738f1dbedd3c303d77
+	cmdver = 0.3.1
