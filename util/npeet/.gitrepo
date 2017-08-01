@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/tozammel/NPEET.git
+	branch = master
+	commit = 24ed9dd810c35a28ca4748d19f72ee19a9e00e6a
+	parent = 9abd30b9391f0e47debea921373cefd00f50b779
+	cmdver = 0.3.1

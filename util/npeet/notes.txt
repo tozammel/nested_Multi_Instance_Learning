@@ -1,0 +1,2 @@
+
+This MI for continuous var approximate the coninuity via nearest neighbors. So we need a certain number of MI samples before making any conclusion

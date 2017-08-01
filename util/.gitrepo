@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@bitbucket.org:tozammel/util.git
+	branch = master
+	commit = f47113a9ccabfa4b3647aa373a76430d4d70c251
+	parent = b63a4ed0ee800e2d19ef270c9cdb0755a2ed3d4f
+	cmdver = 0.3.1
