@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@bitbucket.org:tozammel/plotting.git
+	branch = master
+	commit = 272b93c2c37f87a8af17cd44936545b3bc05338f
+	parent = e96402862edacdb86ab22f34158bd433a4ddef9e
+	cmdver = 0.3.1
