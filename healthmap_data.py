@@ -5,6 +5,7 @@ import os
 import json
 import pandas as pd
 
+
 __version__ = 1.0
 __author__ = "Tozammel Hossain"
 __email__ = "tozammel@isi.edu"
@@ -28,6 +29,8 @@ Health map data format:
 ---place_list (list)
 """
 
+def load_healthmap_data():
+    gss_filepaths = io.load_filepaths_w_ext(gsrdir, 'json')
 
 def main(argv):
     datapath = "/Users/tozammel/safe/data/healthMap_GSS/data"
