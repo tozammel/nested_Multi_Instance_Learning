@@ -1,0 +1,10 @@
+
+
+[*] Reading arabic
+
+[*] Doc2vec:
+
+-- https://rare-technologies.com/doc2vec-tutorial/
+-- https://medium.com/@klintcho/doc2vec-tutorial-using-gensim-ab3ac03d3a1
+-- https://linanqiu.github.io/2015/10/07/word2vec-sentiment/
+

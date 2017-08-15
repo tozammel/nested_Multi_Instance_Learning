@@ -1,0 +1,14 @@
+
+
+Arabia Inform:
+
+
+HealthMap data:
+
+> filter article with local information
+
+isicvl01
+
+Run parallel jobs:
+
+/nfs/isicvlnas01/projects/safe/expts/00002_srawls_br_a/sequence/run.py

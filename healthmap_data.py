@@ -34,15 +34,25 @@ Health map data format:
 
 def load_healthmap_data(gssdir):
     gss_filepaths = io.load_filepaths_w_ext(gssdir, 'json')
-
-    for filepath in gss_filepaths[0:10]:
-        print("Loading:", filepath)
+    print("Number of json files =", len(gss_filepaths))
+    data = list()
+    for idx, filepath in enumerate(gss_filepaths):
+        print("Loading:", filepath, "(", idx, ")")
         gss_data = dp.load_json(filepath, flat=True)
         # pj.traverse_json_keys(gss_data)
         # print(len(gss_data['data']))
-        for article in gss_data['data'][0:1]:
-            pj.traverse_json_keys(article)
-            # gsr_data.extend(gss_data)
+        for article in gss_data['data']:
+            # pj.traverse_json_keys(article)
+            # print(article)
+            if 'cr' in article:
+                creation_date = pd.to_datetime(article['cr']).date()
+                data.append([creation_date, article['dom'], article['url'],
+                             article['description']])
+
+    print('#articles =', len(data))
+    # print(data)
+    df = pd.DataFrame(data)
+    print(df.head())
 
 
 def analyze_healthmap_data():
@@ -50,8 +60,12 @@ def analyze_healthmap_data():
     load_healthmap_data(datapath)
 
 
+
 def main(argv):
+    import time
+    start_time = time.time()
     analyze_healthmap_data()
+    print("--- %s seconds ---" % (time.time() - start_time))
 
 
 if __name__ == "__main__":
