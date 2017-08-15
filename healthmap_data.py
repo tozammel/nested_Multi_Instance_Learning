@@ -47,18 +47,23 @@ def load_healthmap_data(gssdir):
             if 'cr' in article:
                 creation_date = pd.to_datetime(article['cr']).date()
                 data.append([creation_date, article['dom'], article['url'],
-                             article['description']])
+                             article['title'], article['description']])
 
+    columns = ['date', 'dom', 'url', 'title', 'description']
     print('#articles =', len(data))
     # print(data)
-    df = pd.DataFrame(data)
-    print(df.head())
+    df = pd.DataFrame(data, columns=columns)
+    outpath = os.path.join("data", "healthmap_gss")
+    os.makedirs(outpath, exist_ok=True)
+    outpath = os.path.join(outpath, "all_gss.csv")
+    print("Saving:", outpath)
+    df.to_csv(outpath, index=False)
+    # print(df.head())
 
 
 def analyze_healthmap_data():
     datapath = "/Users/tozammel/safe/data/healthMap_GSS/data"
     load_healthmap_data(datapath)
-
 
 
 def main(argv):
