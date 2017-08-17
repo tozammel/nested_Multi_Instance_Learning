@@ -15,6 +15,6 @@ df = web.DataReader("aapl", 'yahoo',
 print(df.head())
 data = [go.Scatter(x=df.index, y=df.High)]
 
-# iplot(data)
+aplot = iplot(data)
+plotly.offline.plot(aplot, filename='test_plotly.html')
 
-help(plotly.offline.plot)
