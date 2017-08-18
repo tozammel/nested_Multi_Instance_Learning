@@ -6,6 +6,6 @@
 [subrepo]
 	remote = git@bitbucket.org:tozammel/datacuration.git
 	branch = master
-	commit = 40482b0d0f9b0a5b0bb645eddcbf8f0671d4ac1a
-	parent = daf2523bb8793f27d8fd529e6bc67076d5ac428f
+	commit = 7cbcc68eaee20331f853dd6c8be6557a78e6d959
+	parent = 9ef050c86c68177ac139d5b8f6e791e9c52fccfb
 	cmdver = 0.3.1
