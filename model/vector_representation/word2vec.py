@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from gensim.parsing import PorterStemmer
+from gensim.models import Word2Vec
 
 __author__ = "Tozammel Hossain"
 __email__ = "tozammel@isi.edu"
@@ -80,23 +81,64 @@ def process_text(text):
     # like ‘machine learning’, or a combination of both.
     # remove all special characters and short lines from the article, to
     # eliminate noise.
+    # Stopwords: http://www.ranks.nl/stopwords
+    # (seems to be cool: http://www.ranks.nl/home)
+
+    # stopwords: https://pydigger.com/pypi/many-stop-words
+    # same repo in pypi: https://pypi.python.org/pypi/many-stop-words
+    # this repo used ranks.nl
+
+    import many_stop_words as stop_words
+
+
+
     pass
 
 
-def learn_word2vec():
+def learn_word2vec(sentences, size=50, window=4, min_count=2):
     # ref: https://codesachin.wordpress.com/2015/10/09/generating-a-word2vec-model-from-a-block-of-text-using-gensim-python/
 
-    # Obtain the text
-    text = get_wiki_text()
+    # parameters
+    # 1. size:  If you have read the document and have an idea of how many
+    # ‘topics’ it has, you can use that number. A good heuristic that is
+    # frequently used is the square-root of the length of the vocabulary,
+    # after pre-processing.
+    # 2. min_count: Terms that occur less than min_count number of times are
+    # ignored in the calculations.
+    # 3. window – Only terms hat occur within a window-neighbourhood of a term,
+    # in a sentence, are associated with it during training.
+    # 4. sg: If equal to 1, the skip-gram technique is used. Else, the CBoW
+    # method is employed.
+
+    # initialize the model and use it
+    model = Word2Vec(sentences, min_count=min_count, size=size, window=window)
+
+    # access all the terms in its vocabulary
+    vocab = list(model.vocab.keys())
+    print(vocab[:10])
+
+    # get the vectorial representation of a particular term
+    print(model['learn'])
+
+    # figure out the terms most similar to a particular one
+    print(model.most_similar(StemmingHelper.stem('classification')))
+    # model.similarity(StemmingHelper.stem('classification'), 'supervis')
+    # model.similarity('unsupervis', 'supervis')
 
 
 def main(argv):
     import time
     start_time = time.time()
-    # analyze_healthmap_data()
-    # analyze_healthmap_csv_data()
 
-    learn_word2vec()
+    # Obtain the text
+    text = get_wiki_text()
+    # print(text)
+    print(type(text))
+
+    # process text
+    sentences = process_text()
+
+    # learn_word2vec(sentences)
 
     print("\n\n--- %s seconds ---" % (time.time() - start_time))
 

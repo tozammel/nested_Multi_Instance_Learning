@@ -83,6 +83,7 @@ Non-State Actor    66565
 # Process Raw Data
 ######################################################################
 
+# <editor-fold desc="Process Raw Data">
 def load_mansa_gsr(gsrdir=None, remove_duplicates=True):
     if gsrdir is None:
         gsrdir = "/Users/tozammel/safe/isi-code/mercury/data/gsr/mansa_gsr"
@@ -169,6 +170,7 @@ def ts_given_county(df=None, grs_dir=None, country="Syria",
         plt.ylabel("#Events", fontsize=20)
 
     return df_sub, ts
+# </editor-fold>
 
 
 ######################################################################
@@ -250,6 +252,50 @@ def identify_absence_of_events(event_start_date="2016-10-02",
     ts_zero = ts[ts == 0]
     print("No events")
     print(ts_zero)
+
+
+def identify_positive_negative_samples(
+        event_start_date="2016-01-01", event_end_date="2017-06-30"):
+    mansa_gsr_df = load_mansa_gsr()
+    mansa_gsr_df = mansa_gsr_df[
+        (mansa_gsr_df['Event_Date'] >= pd.to_datetime(event_start_date)) & (
+            mansa_gsr_df['Event_Date'] <= pd.to_datetime(event_end_date))]
+
+    # country-->actor-->city
+
+    mansa_gsr_df_event_by_country = \
+        mansa_gsr_df.groupby('Country').size()
+    ret = mansa_gsr_df_event_by_country.nlargest(3)
+    for country in ret.index:
+        print("[]", country)
+        country_df = mansa_gsr_df[mansa_gsr_df['Country'] == country]
+        country_actor_gby = country_df.groupby('Actor').size()
+        ret = country_actor_gby.nlargest(5)
+        print(ret)
+        for actor in ret.index:
+            print("==", actor)
+            print(type(actor))
+
+    # country and event subtype
+    #
+    # df = df[(df['Country'] == 'Iraq') &
+    #         (df['Event_Subtype'] == 'Bombing')]
+    #
+    # # actor
+    # #
+    # df = df[(df['Country'] == 'Iraq') &
+    #         (df['Event_Subtype'] == 'Bombing')]
+    #
+    # print(df.shape)
+    # ts = df.groupby('Event_Date').size()
+    # ts = ts.reindex(pd.date_range(event_start_date, "2017-06-30"), fill_value=0)
+    # ts.name = 'count'
+    # ts.index.name = 'date'
+    # # print(ts.head(10))
+    #
+    # ts_zero = ts[ts == 0]
+    # print("No events")
+    # print(ts_zero)
 
 
 def analyze_duplicates(gsrdir=None):
@@ -747,7 +793,8 @@ def main(args):
     # analyze_city()
 
     # plot_timeseries()
-    identify_absence_of_events()
+    # identify_absence_of_events()
+    identify_positive_negative_samples()
 
 
 if __name__ == "__main__":

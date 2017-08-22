@@ -1,0 +1,20 @@
+
+## timeline of arabia infor documents?
+
+## filter our arabia inform documents?
+
+-- tags
+-- language (only consider arabic source)
+---- how does gsr url look like (all arabic or all english)
+
+
+## dataset config 1
+
+-- use event/no event on a day as particular tags
+
+
+## dataset config 2
+
+-- use low num of events/ mid number of events/ high number of events as tags
+
+
