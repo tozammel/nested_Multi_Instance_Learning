@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/stanfordnlp/GloVe.git
+	branch = master
+	commit = 6f4060174a7939263eae384d35e086ea76281ddb
+	parent = 540c5a9570d094b2391d89156adcc5443968b71f
+	cmdver = 0.3.1
