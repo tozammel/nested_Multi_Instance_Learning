@@ -15,6 +15,7 @@ https://codesachin.wordpress.com/2015/10/09/generating-a-word2vec-model-from-a-b
 global_stemmer = PorterStemmer()
 
 
+# <editor-fold desc="Stemmer">
 class StemmingHelper(object):
     """
     Class to aid the stemming process - from word to stemmed form,
@@ -56,6 +57,7 @@ class StemmingHelper(object):
                        key=lambda x: cls.word_lookup[word][x])
         else:
             return word
+# </editor-fold>
 
 
 def get_wiki_text(showtext=True):
