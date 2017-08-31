@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+#!/usr/bin/python2
+=======
+>>>>>>> ed
 # -*- coding: utf-8 -*-
 
 ## Nielsen Stemmer, based in part on the light10 stemmer
